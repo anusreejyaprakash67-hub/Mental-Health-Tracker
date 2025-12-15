@@ -1,3 +1,4 @@
-flask
-os
-math
+Flask==2.3.2
+Werkzeug==2.3.6
+Jinja2==3.1.2
+Clickheart==8.1.3
