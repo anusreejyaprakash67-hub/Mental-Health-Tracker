@@ -272,4 +272,4 @@ def reset():
 
 if __name__ == "__main__":
     # set debug=False in production
-    app.run(debug=True)
+    app.ruapp.run(host='0.0.0.0', port=5000, debug=False)
