@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question {{ q_no }} of {{ total }} - Mental Health Tracker</title>
+    <style>
+        body { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; display: flex; justify-content: center; align-items: center; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 20px; }
+        .question-container { background: white; padding: 40px; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); max-width: 600px; width: 100%; }
+        .progress { height: 8px; background: #e0e0e0; border-radius: 10px; margin-bottom: 30px; overflow: hidden; }
+        .progress-bar { height: 100%; background: linear-gradient(90deg, #667eea 0%, #764ba2 100%); width: {{ progress }}%; transition: width 0.3s; }
+        h1 { margin: 0 0 10px 0; color: #333; font-size: 24px; }
+        .question-meta { color: #999; font-size: 14px; margin-bottom: 30px; }
+        .question { color: #333; font-size: 18px; font-weight: 600; margin: 30px 0; line-height: 1.6; }
+        .options { display: grid; gap: 15px; margin: 30px 0; }
+        label { display: flex; align-items: center; padding: 15px; background: #f5f5f5; border-radius: 8px; cursor: pointer; transition: all 0.3s; }
+        label:hover { background: #eee; transform: translateX(5px); }
+        input[type="radio"] { margin-right: 15px; cursor: pointer; accent-color: #667eea; }
+        .option-text { flex: 1; }
+        button { width: 100%; padding: 14px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; margin-top: 20px; transition: all 0.3s; }
+        button:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4); }
+        .greeting { color: #667eea; font-weight: 600; }
+    </style>
+</head>
+<body>
+    <div class="question-container">
+        <div class="progress">
+            <div class="progress-bar"></div>
+        </div>
+        
+        <h1>Hello <span class="greeting">{{ user_name }}</span>! 👋</h1>
+        <div class="question-meta">Question {{ q_no }} of {{ total }}</div>
+        
+        <p class="question">{{ question }}</p>
+        
+        <form method="POST">
+            <div class="options">
+                <label>
+                    <input type="radio" name="answer" value="0" required>
+                    <div class="option-text">Did not apply to me at all</div>
+                </label>
+                <label>
+                    <input type="radio" name="answer" value="1" required>
+                    <div class="option-text">Applied to me to some degree</div>
+                </label>
+                <label>
+                    <input type="radio" name="answer" value="2" required>
+                    <div class="option-text">Applied to me to a considerable degree</div>
+                </label>
+                <label>
+                    <input type="radio" name="answer" value="3" required>
+                    <div class="option-text">Applied to me most of the time</div>
+                </label>
+            </div>
+            <button type="submit">Next Question →</button>
+        </form>
+    </div>
+</body>
+</html>
