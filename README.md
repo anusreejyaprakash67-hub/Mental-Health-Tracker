@@ -4,3 +4,6 @@ name , age, profession (school student , college student,it professional , govt 
 demo page 
 question 
 display result along with pie chart 
+anxiety - murky yellow
+depression - grey 
+stress- red 
