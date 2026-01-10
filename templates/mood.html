@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Mood Tracker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .mood-selector {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .mood-selector label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            padding: 10px 15px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        .mood-selector label:hover {
+            border-color: #007bff;
+            background-color: #f0f7ff;
+        }
+        .mood-selector input:checked + label {
+            border-color: #007bff;
+            background-color: #007bff;
+            color: white;
+        }
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: Arial, sans-serif;
+        }
+        .btn {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            margin-right: 10px;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+        .btn.secondary {
+            background-color: #6c757d;
+        }
+        .btn.secondary:hover {
+            background-color: #545b62;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 Daily Mood Tracker</h1>
+        <p>How are you feeling today?</p>
+        
+        <form method="POST">
+            <div class="mood-selector">
+                {% for mood in moods %}
+                <input type="radio" id="mood_{{ mood }}" name="mood" value="{{ mood }}" required>
+                <label for="mood_{{ mood }}">{{ mood }}</label>
+                {% endfor %}
+            </div>
+            
+            <textarea name="note" placeholder="Optional: Add a note about your mood..." rows="4"></textarea>
+            
+            <button type="submit" class="btn">💾 Save Mood Entry</button>
+        </form>
+        
+        <a href="{{ url_for('mood_history') }}" class="btn secondary">📈 View History</a>
+        <a href="{{ url_for('result') }}" class="btn secondary">⬅️ Back to Results</a>
+    </div>
+</body>
+</html>
