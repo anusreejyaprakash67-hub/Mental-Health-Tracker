@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 import os
+from datetime import date
 
 app = Flask(__name__)
 app.secret_key = "replace_with_a_secure_random_key"
@@ -54,6 +55,9 @@ STATES = [
     "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura",
     "Uttar Pradesh", "Uttarakhand", "West Bengal"
 ]
+
+# --- Daily Mood Tracker Options ---
+MOODS = ["Happy", "Calm", "Neutral", "Sad", "Anxious", "Stressed"]
 
 # --- Severity classification functions ---
 def classify_depression(score):
@@ -263,6 +267,40 @@ def result():
                            anx_advice=anx_advice,
                            str_advice=str_advice,
                            chart_data=chart_data)
+
+@app.route('/mood', methods=['GET', 'POST'])
+def mood():
+    """Daily mood tracker entry page"""
+    if 'user_name' not in session:
+        return redirect(url_for('login'))
+    
+    if 'mood_log' not in session:
+        session['mood_log'] = []
+    
+    if request.method == 'POST':
+        selected_mood = request.form.get('mood')
+        note = request.form.get('note', '')
+        
+        mood_entry = {
+            "date": date.today().strftime("%d-%m-%Y"),
+            "mood": selected_mood,
+            "note": note
+        }
+        session['mood_log'].append(mood_entry)
+        session.modified = True
+        
+        return redirect(url_for('mood_history'))
+    
+    return render_template('mood.html', moods=MOODS)
+
+@app.route('/mood-history')
+def mood_history():
+    """Display user's mood history"""
+    if 'user_name' not in session:
+        return redirect(url_for('login'))
+    
+    mood_log = session.get('mood_log', [])
+    return render_template('mood_history.html', mood_log=mood_log)
 
 @app.route('/reset')
 def reset():
