@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mood History</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        thead {
+            background-color: #007bff;
+            color: white;
+        }
+        th {
+            padding: 12px;
+            text-align: left;
+            font-weight: bold;
+        }
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+        tbody tr:hover {
+            background-color: #f5f5f5;
+        }
+        .btn {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+            margin-top: 10px;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+        .btn.secondary {
+            background-color: #6c757d;
+        }
+        .btn.secondary:hover {
+            background-color: #545b62;
+        }
+        .no-data {
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📈 Your Mood History</h1>
+        
+        {% if mood_log %}
+        <table class="mood-table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Mood</th>
+                    <th>Note</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for entry in mood_log %}
+                <tr>
+                    <td>{{ entry.date }}</td>
+                    <td><strong>{{ entry.mood }}</strong></td>
+                    <td>{{ entry.note }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div class="no-data">
+            <p>No mood entries yet. Start tracking your daily mood!</p>
+        </div>
+        {% endif %}
+        
+        <a href="{{ url_for('mood') }}" class="btn">➕ Add Today's Mood</a>
+        <a href="{{ url_for('result') }}" class="btn secondary">⬅️ Back to Results</a>
+        <a href="{{ url_for('login') }}" class="btn secondary">🚪 Back to Login</a>
+    </div>
+</body>
+</html>
